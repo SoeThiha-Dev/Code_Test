@@ -65,7 +65,7 @@ namespace Code_Test.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Policy = "AuthorizationHeaderRequirement")]
         [HttpGet("RefreshToken"), MapToApiVersion("0.0")]
         public IActionResult RefreshToken()
         {

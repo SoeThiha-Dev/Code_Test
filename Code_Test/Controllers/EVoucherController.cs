@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [EnableCors("MyAllowSpecificOrigins")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "AuthorizationHeaderRequirement")]
     public class EVoucherController : ControllerBase
     {
         private readonly IEVoucherBAL _eVoucherBAL;

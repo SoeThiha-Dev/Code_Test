@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Authen;
 using WebAPI.BAL;
 using WebAPI.Model;
 using WebAPI.Repo;
@@ -87,6 +88,12 @@ namespace Code_Test
                 };
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AuthorizationHeaderRequirement", policy =>
+                    policy.Requirements.Add(new AuthorizationHeaderRequirement()));
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v0.0", new OpenApiInfo { Title = "CodeTest API", Version = "v0.0" });
@@ -106,6 +113,8 @@ namespace Code_Test
                     }
                 });
             });
+
+            services.AddSingleton<IAuthorizationHandler, AuthorizationHeaderHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
